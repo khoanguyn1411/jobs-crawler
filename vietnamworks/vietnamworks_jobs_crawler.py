@@ -101,11 +101,13 @@ def join_data(data, field):
 
 csv_writer = create_csv_writer("vietnamworks_jobs.csv")
 
+PAGE_START = 133
+
 
 def crawl_vietnamworks_jobs():
     print(f"Job Metadata: {jobMetaData}")
 
-    for page in range(total_page):
+    for page in range(PAGE_START, total_page):
         response = requests.post(
             url, json=create_payload(page), headers=headers).json()
 

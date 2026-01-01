@@ -152,12 +152,14 @@ def extract_job_data(page=1):
 
 writer = create_csv_writer("jobgo_jobs.csv")
 
+PAGE_START = 69
+
 
 def crawl_jobgo_jobs():
     meta_data_job = get_job_meta_data()
     total_page = meta_data_job["total_page"]
 
-    for page in range(total_page):
+    for page in range(PAGE_START, total_page):
         try:
             jobs = extract_job_data(page + 1).get("jobs", [])
             for index, job in enumerate(jobs, start=1):
