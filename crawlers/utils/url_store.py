@@ -15,7 +15,7 @@ def save_urls(file_path: str, data: dict):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def append_url(file_path: str, source: str, url: str):
+def append_url(file_path: str, source: str, url):
     data = load_urls(file_path)
 
     if source not in data:

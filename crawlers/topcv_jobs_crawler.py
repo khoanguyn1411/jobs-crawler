@@ -17,7 +17,7 @@ headers = {
 }
 
 BASE_URL = "https://www.topcv.vn/tim-viec-lam-moi-nhat"
-TIME_SLEEP_IN_S = random.uniform(3, 4)
+TIME_SLEEP_IN_S = random.uniform(6, 9)
 PAGE_START = 1
 TOTAL_PAGE = 578
 
@@ -162,7 +162,7 @@ def extract_job_detail(job_url):
         "job_requirements": job_requirements,
         "benefits_vn": benefits_vn,
         "salary": salary,
-        "skills": skills
+        "skills": skills,
     }
 
 
