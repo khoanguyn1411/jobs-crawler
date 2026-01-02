@@ -27,6 +27,7 @@ def create_csv_writer(csv_file_path):
     ]
 
     file_exists = os.path.isfile(file_path)
+    os.makedirs(os.path.dirname(os.path.abspath(file_path)), exist_ok=True)
 
     csv_file = open(file_path, mode="a", newline="", encoding="utf-8-sig")
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)

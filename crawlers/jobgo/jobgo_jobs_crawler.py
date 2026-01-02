@@ -150,7 +150,7 @@ def extract_job_data(page=1):
     return {"jobs": jobs, "total_per_page": len(jobs)}
 
 
-writer = create_csv_writer("jobgo_jobs.csv")
+writer = create_csv_writer("./crawling_results/jobgo_jobs.csv")
 
 
 def crawl_jobgo_jobs():

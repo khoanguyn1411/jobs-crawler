@@ -98,7 +98,7 @@ def join_data(data, field):
         return ""
 
 
-csv_writer = create_csv_writer("vietnamworks_jobs.csv")
+csv_writer = create_csv_writer("./crawling_results/vietnamworks_jobs.csv")
 
 
 def crawl_vietnamworks_jobs():
