@@ -34,7 +34,7 @@ def get_job_detail_url(job_tag):
     return job_url
 
 
-def extract_text_by_label(job_detail_html, label, reference_tag="h3", reference_tag_class=None, value_tag="div"):
+def extract_text_by_label(job_detail_html, label, reference_tag="h3", reference_tag_class=None, value_selector="div"):
     soup = BeautifulSoup(job_detail_html, "lxml")
 
     # 1. Find the <h3> by its visible text
@@ -47,7 +47,7 @@ def extract_text_by_label(job_detail_html, label, reference_tag="h3", reference_
         return ""
 
     # 2. The content is in the next <div>
-    content_div = reference_tag.parent.select_one(value_tag)
+    content_div = reference_tag.parent.select_one(value_selector)
 
     if not content_div:
         return ""
@@ -125,23 +125,23 @@ def extract_job_detail(job_url):
         "div.company-name-label").select_one("a").get_text(strip=True)
 
     location = extract_text_by_label(
-        job_detail_html=response.content, label="Địa điểm", reference_tag="div", reference_tag_class="job-detail__info--section-content-title", value_tag="a")
+        job_detail_html=response.content, label="Địa điểm", reference_tag="div", reference_tag_class="job-detail__info--section-content-title", value_selector="a")
 
     industries_vn = get_industries(response.content)
     job_level_vn = extract_text_by_label(
-        job_detail_html=response.content, label="Cấp bậc", reference_tag="div", reference_tag_class="box-general-group-info-title", value_tag="div.box-general-group-info-value")
+        job_detail_html=response.content, label="Cấp bậc", reference_tag="div", reference_tag_class="box-general-group-info-title", value_selector="div.box-general-group-info-value")
 
     job_description = extract_text_by_label(
-        job_detail_html=response.content, label="Mô tả công việc", reference_tag="h3", value_tag="div")
+        job_detail_html=response.content, label="Mô tả công việc", reference_tag="h3", value_selector="div")
 
     job_requirements = extract_text_by_label(
-        job_detail_html=response.content, label="Yêu cầu ứng viên", reference_tag="h3", value_tag="div")
+        job_detail_html=response.content, label="Yêu cầu ứng viên", reference_tag="h3", value_selector="div")
 
     benefits_vn = extract_text_by_label(
-        job_detail_html=response.content, label="Quyền lợi", reference_tag="h3", value_tag="div")
+        job_detail_html=response.content, label="Quyền lợi", reference_tag="h3", value_selector="div")
 
     salary = extract_text_by_label(
-        job_detail_html=response.content, label="Mức lương", reference_tag="div", reference_tag_class="job-detail__info--section-content-title", value_tag="div")
+        job_detail_html=response.content, label="Mức lương", reference_tag="div", reference_tag_class="job-detail__info--section-content-title", value_selector="div.box-general-group-info-value")
 
     skills = get_skills(response.content)
 
