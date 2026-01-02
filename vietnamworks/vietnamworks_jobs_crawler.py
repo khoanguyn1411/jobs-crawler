@@ -4,8 +4,6 @@ import time
 import json
 from bs4 import BeautifulSoup
 
-url = "https://ms.vietnamworks.com/job-search/v1.0/search"
-
 headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -14,7 +12,10 @@ headers = {
     "Referer": "https://www.vietnamworks.com/",
 }
 
-per_page = 20
+URL = "https://ms.vietnamworks.com/job-search/v1.0/search"
+PER_PAGE = 20
+PAGE_START = 133
+DELAY_TIME_IN_S = 4
 
 
 def create_payload(page=0):
@@ -24,7 +25,7 @@ def create_payload(page=0):
         "filter": [],
         "ranges": [],
         "order": [],
-        "hitsPerPage": per_page,
+        "hitsPerPage": PER_PAGE,
         "page": page,
         "retrieveFields": [
             "address", "benefits", "jobTitle", "salaryMax", "isSalaryVisible", "jobLevelVI", "isShowLogo", "salaryMin", "companyLogo", "userId", "jobLevel", "jobLevelId", "jobId", "jobUrl", "companyId", "approvedOn", "isAnonymous", "alias", "expiredOn", "industries", "industriesV3",
@@ -34,15 +35,13 @@ def create_payload(page=0):
     }
 
 
-meta_response = requests.post(url, json=create_payload(), headers=headers)
+meta_response = requests.post(URL, json=create_payload(), headers=headers)
 
 data = meta_response.json()
 
 jobMetaData = data['meta']
 
 total_page = jobMetaData['nbPages']
-
-delay_time = 4  # seconds between requests
 
 
 def find_job_description(job_detail_html):
@@ -101,15 +100,13 @@ def join_data(data, field):
 
 csv_writer = create_csv_writer("vietnamworks_jobs.csv")
 
-PAGE_START = 133
-
 
 def crawl_vietnamworks_jobs():
     print(f"Job Metadata: {jobMetaData}")
 
     for page in range(PAGE_START, total_page):
         response = requests.post(
-            url, json=create_payload(page), headers=headers).json()
+            URL, json=create_payload(page), headers=headers).json()
 
         for index, job in enumerate(response["data"]):
             try:
@@ -146,6 +143,6 @@ def crawl_vietnamworks_jobs():
             print(
                 f"Page {page + 1}/{total_page} - {index + 1}/{len(response['data'])} - job {job.get('jobId')} - {job.get('jobTitle')}")
 
-            time.sleep(delay_time)
+            time.sleep(DELAY_TIME_IN_S)
 
-        time.sleep(delay_time)
+        time.sleep(DELAY_TIME_IN_S)

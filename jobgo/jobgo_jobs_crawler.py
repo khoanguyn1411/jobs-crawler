@@ -8,8 +8,8 @@ from utils.csv_writer import create_csv_writer
 headers = {"User-Agent": "Mozilla/5.0"}
 
 BASE_URL = "https://jobsgo.vn/viec-lam.html"
-
-TIME_SLEEP_IN_S = 3
+TIME_SLEEP_IN_S = 2
+PAGE_START = 424
 
 
 def extract_text_by_label(job_detail_html, label, reference_tag="h3", value_tag="div"):
@@ -151,8 +151,6 @@ def extract_job_data(page=1):
 
 
 writer = create_csv_writer("jobgo_jobs.csv")
-
-PAGE_START = 69
 
 
 def crawl_jobgo_jobs():
