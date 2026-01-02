@@ -1,8 +1,8 @@
 import argparse
 
-from crawlers.jobgo.jobgo_jobs_crawler import crawl_jobgo_jobs
-from crawlers.vietnamworks.vietnamworks_jobs_crawler import crawl_vietnamworks_jobs
-from crawlers.topcv.topcv_jobs_crawler import crawl_topcv_jobs
+from crawlers.jobgo_jobs_crawler import crawl_jobgo_jobs
+from crawlers.vietnamworks_jobs_crawler import crawl_vietnamworks_jobs
+from crawlers.topcv_jobs_crawler import crawl_topcv_jobs
 
 
 def main():

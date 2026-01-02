@@ -3,7 +3,7 @@ import requests
 import re
 import math
 import time
-from utils import create_csv_writer
+from utils.csv_writer import create_csv_writer
 
 
 headers = {
