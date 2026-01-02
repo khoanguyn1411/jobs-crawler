@@ -1,4 +1,5 @@
-from utils.csv_writer import create_csv_writer
+from crawlers.utils.csv_writer import create_csv_writer
+
 import requests
 import time
 import json

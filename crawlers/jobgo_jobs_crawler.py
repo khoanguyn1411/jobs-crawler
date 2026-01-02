@@ -3,7 +3,7 @@ import requests
 import re
 import math
 import time
-from utils.csv_writer import create_csv_writer
+from crawlers.utils.csv_writer import create_csv_writer
 
 headers = {"User-Agent": "Mozilla/5.0"}
 
