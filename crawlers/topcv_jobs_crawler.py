@@ -4,15 +4,20 @@ import re
 import math
 import time
 from crawlers.utils.csv_writer import create_csv_writer
-
+from crawlers.utils.url_store import append_url
+import random
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/121.0.0.0 Safari/537.36",
+    "Accept-Language": "vi-VN,vi;q=0.9,en-US;q=0.8",
+
 
 }
 
 BASE_URL = "https://www.topcv.vn/tim-viec-lam-moi-nhat"
-TIME_SLEEP_IN_S = 2
+TIME_SLEEP_IN_S = random.uniform(3, 4)
 PAGE_START = 1
 TOTAL_PAGE = 578
 
@@ -148,6 +153,7 @@ def extract_job_detail(job_url):
     return {
         "job_id": job_id,
         "job_title": job_title,
+        "job_url": job_url,
         "company": company,
         "location": location,
         "industries_vn": industries_vn,
@@ -174,7 +180,6 @@ def crawl_topcv_jobs():
                 try:
                     job_detail_url = get_job_detail_url(job_tag)
                     job_detail = extract_job_detail(job_detail_url)
-                    time.sleep(TIME_SLEEP_IN_S)
                     data_to_write = {
                         "job_id": job_detail.get("job_id"),
                         "job_title": job_detail.get("job_title"),
@@ -193,11 +198,19 @@ def crawl_topcv_jobs():
                     writer.writerow(data_to_write)
                     print(
                         f"Page {page}/{TOTAL_PAGE} - {index + 1}/{len(jobs)} - job {job_detail.get('job_id')} - {job_detail.get('job_title')}")
+                    time.sleep(TIME_SLEEP_IN_S)
 
                 except Exception as e:
-                    print(f"Error processing job {job_detail_url}: {e}")
+                    print(
+                        f"Error processing job {job_detail_url}, skipping and store to .json file")
+                    append_url(file_path="./crawling_results/topcv_brand_jobs.json",
+                               source="topcv_brand_urls", url=job_detail_url)
+                    time.sleep(TIME_SLEEP_IN_S)
                     continue
+
+            time.sleep(TIME_SLEEP_IN_S)
 
         except Exception as e:
             print(f"Error processing page {page + 1}: {e}")
+            time.sleep(TIME_SLEEP_IN_S)
             continue
