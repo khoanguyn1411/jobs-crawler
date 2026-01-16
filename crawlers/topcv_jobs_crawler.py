@@ -12,13 +12,11 @@ headers = {
     "AppleWebKit/537.36 (KHTML, like Gecko) "
                   "Chrome/121.0.0.0 Safari/537.36",
     "Accept-Language": "vi-VN,vi;q=0.9,en-US;q=0.8",
-
-
 }
 
 BASE_URL = "https://www.topcv.vn/tim-viec-lam-moi-nhat"
-TIME_SLEEP_IN_S = random.uniform(6, 9)
-PAGE_START = 1
+TIME_SLEEP_IN_S = random.uniform(6, 8)
+PAGE_START = 528
 TOTAL_PAGE = 578
 
 
